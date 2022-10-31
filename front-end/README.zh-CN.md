@@ -16,7 +16,7 @@
   <a href="https://github.com/vuejs/vuex">
     <img src="https://img.shields.io/badge/vuex-3.6.2-brightgreen.svg" alt="vuex" />
   </a>
-</p>s
+</p>
 
 <p align='center'>
   <b>Vite3</b> + <b>Vue2</b> + <b>JavaScript</b> + <b>Vue Router</b> + <b>Vuex</b> + <b>Less</b> + <b>Axios</b> + <b>ESLint + Stylelint + Prettier</b>
@@ -46,7 +46,7 @@
 
 ## 开发工具
 
-- [npm](https://www.npmjs.com) - 包管理器
+- [yarn](https://yarnpkg.com) - 包管理器
 - [Visual Stuido Code 扩展](./.vscode/extensions.json)
   - [Vite](https://marketplace.visualstudio.com/items?itemName=antfu.vite) - 自动启动 Vite 服务器
   - [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) - Vue 2 VS Code 工具
@@ -68,17 +68,17 @@
 
 ```bash
 ## 安装依赖
-npm install
+yarn install / yarn
 
 ## 运行
-npm run dev
+yarn dev
 ```
 
 ### 构建
 
 ```bash
 ## 构建
-npm run build
+yarn build
 ```
 
 ## 开源协议

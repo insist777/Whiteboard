@@ -46,7 +46,7 @@
 
 ## Development Tools
 
-- [npm](https://www.npmjs.com) - Package manager
+- [yarn](https://yarnpkg.com) - Package manager
 - [Visual Stuido Code Extensions](./.vscode/extensions.json)
   - [Vite](https://marketplace.visualstudio.com/items?itemName=antfu.vite) - Fire up Vite server automatically
   - [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) - Vue 2 tooling for VS Code
@@ -67,17 +67,17 @@
 
 ```bash
 ## install dependencies
-npm install
+yarn install / yarn
 
 ## set up
-npm run dev
+yarn dev
 ```
 
 ### Build
 
 ```bash
 ## build
-npm run build
+yarn build
 ```
 
 ## License
