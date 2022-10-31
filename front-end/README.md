@@ -16,9 +16,6 @@
   <a href="https://github.com/vuejs/vuex">
     <img src="https://img.shields.io/badge/vuex-3.6.2-brightgreen.svg" alt="vuex" />
   </a>
-  <a href="https://doc.starimmortal.com">
-    <img alt="author" src="https://img.shields.io/badge/author-ElanYoung-blue.svg" />
-  </a>
 </p>
 
 <p align='center'>

@@ -16,10 +16,7 @@
   <a href="https://github.com/vuejs/vuex">
     <img src="https://img.shields.io/badge/vuex-3.6.2-brightgreen.svg" alt="vuex" />
   </a>
-  <a href="https://doc.starimmortal.com">
-    <img alt="author" src="https://img.shields.io/badge/author-ElanYoung-blue.svg" />
-  </a>
-</p>
+</p>s
 
 <p align='center'>
   <b>Vite3</b> + <b>Vue2</b> + <b>JavaScript</b> + <b>Vue Router</b> + <b>Vuex</b> + <b>Less</b> + <b>Axios</b> + <b>ESLint + Stylelint + Prettier</b>
