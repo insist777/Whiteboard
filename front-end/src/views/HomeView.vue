@@ -1,9 +1,9 @@
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <div class="text-red-800"><h1 class="text-xl">11111</h1></div>
 </template>
 
-<script setup lang="ts">
-import TheWelcome from '@/components/TheWelcome.vue';
+<script>
+// import TheWelcome from '@/components/TheWelcome.vue';
+
+export default {};
 </script>

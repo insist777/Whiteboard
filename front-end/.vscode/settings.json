@@ -8,15 +8,27 @@
   "editor.wordWrap": "wordWrapColumn",
   "editor.wordWrapColumn": 120,
   "editor.tabSize": 2,
-  "editor.rulers": [120],
+  "editor.rulers": [
+    120
+  ],
   "[json]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "eslint.enable": true,
   "eslint.packageManager": "yarn",
-  "eslint.validate": ["javascript", "javascriptvue", "vue",],
-  "stylelint.validate": ["css", "less", "postcss", "scss", "vue", "sass"],
-
+  "eslint.validate": [
+    "javascript",
+    "javascriptvue",
+    "vue",
+  ],
+  "stylelint.validate": [
+    "css",
+    "less",
+    "postcss",
+    "scss",
+    "vue",
+    "sass"
+  ],
   "editor.codeActionsOnSave": {
     "source.fixAll": true,
     "source.fixAll.eslint": true,
@@ -25,7 +37,7 @@
     "eslint.autoFixOnSave": true,
   },
   "[vue]": {
-    "editor.defaultFormatter": "Vue.volar"
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[javascript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"

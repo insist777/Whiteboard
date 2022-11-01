@@ -6,6 +6,8 @@ import router from './router';
 
 import '@/style/index.less';
 import '@/assets/main.css';
+// import 'tailwindcss/tailwind.css';
+import './index.css';
 
 new Vue({
   router,

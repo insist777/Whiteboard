@@ -85,3 +85,17 @@ yarn build
 [MIT](http://opensource.org/licenses/MIT)
 
 Copyright (c) 2022 无敌队
+
+// git commit
+
+type（必须） : commit 的类别：
+feat : 新功能
+fix : 修复bug
+docs : 文档改变
+style : 样式改变
+refactor : 某个已有功能重构
+perf : 性能优化
+test : 增加测试
+build : 改变了build工具 如 grunt换成了 npm
+revert : 撤销上一次的 commit
+chore : 构建过程或辅助工具的变动
