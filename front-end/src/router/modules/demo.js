@@ -1,12 +1,12 @@
 export default [
   {
-    path: '/',
-    name: 'home',
-    component: () => import('@/views/HomeView.vue'),
+    path: '/whiteBoard',
+    name: 'whiteBoard',
+    component: () => import('@/views/whiteBoard'),
   },
   {
-    path: '/about',
-    name: 'about',
-    component: () => import('@/views/AboutView.vue'),
+    path: '/',
+    name: 'home',
+    component: () => import('@/views/home/index.vue'),
   },
 ];
