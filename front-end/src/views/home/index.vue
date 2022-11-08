@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-row min-h-screen bg-gradient-to-r from-gray-800 to-blue-800">
-    <nav class="fixed bg-transparent top-0 left-0 right-0 transition-all ease-in-out z-20">
-      <div class="py-5 flex justify-between items-center transition-all ease-in-out">
+    <nav class="fixed bg-transparent top-0 left-0 right-0 z-20">
+      <div class="py-5 flex justify-between items-center">
         <h1
           class="ml-6 bg-clip-text text-3xl text-transparent font-mono bg-gradient-to-r from-green-400 to-blue-500"
         >

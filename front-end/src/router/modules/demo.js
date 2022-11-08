@@ -2,7 +2,7 @@ export default [
   {
     path: '/whiteBoard',
     name: 'whiteBoard',
-    component: () => import('@/views/whiteBoard'),
+    component: () => import('@/views/whiteBoard/index.vue'),
   },
   {
     path: '/',
