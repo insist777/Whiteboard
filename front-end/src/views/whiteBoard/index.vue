@@ -27,6 +27,8 @@
             :min="1"
             :max="10"
           ></el-input-number>
+          <span class="px-5">|</span>
+          <i class="iconfont icon-tianse cursor-pointer text-gray-500"></i>
         </div>
       </el-header>
       <el-container class="mt-10 text-center">
@@ -63,13 +65,24 @@ export default {
 </script>
 
 <style scoped lang="less">
-.font ::v-deep .el-input__inner {
+.count ::v-deep.el-input {
+  width: 50px;
+}
+::v-deep .el-input__inner {
   padding: 0;
-  width: 100px;
   border: 0;
   background-color: transparent;
 }
-.count ::v-deep .el-input-number.is-controls-right .el-input__inner {
+::v-deep .el-input-number__decrease,
+.el-input-number__increase {
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+}
+.font ::v-deep .el-input__inner {
   width: 100px;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
 }
 </style>
