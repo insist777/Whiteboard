@@ -29,11 +29,35 @@
           ></el-input-number>
           <span class="px-5">|</span>
           <i class="iconfont icon-tianse cursor-pointer text-gray-500"></i>
+          <i class="el-icon-edit cursor-pointer pl-5"></i>
+          <i class="iconfont icon-image cursor-pointer pl-5"></i>
+          <span class="px-5">|</span>
+          <i class="iconfont icon-select cursor-pointer text-gray-800"></i>
+          <i class="iconfont icon-cut cursor-pointer px-5"></i>
+          <i class="iconfont icon-copy cursor-pointer pr-5"></i>
+          <i class="iconfont icon-paste cursor-pointer text-gray-500"></i>
+          <span class="px-5">|</span>
+          <i class="iconfont icon-clear cursor-pointer text-gray-800"></i>
         </div>
       </el-header>
       <el-container class="mt-10 text-center">
-        <el-aside class="w-1/5 bg-gray-300">Aside</el-aside>
-        <el-main class="bg-gray-200">Main</el-main>
+        <div class="w-12 bg-gray-100 h-screen">
+          <div class="my-2">
+            <div class="my-3"><i class="iconfont icon-ArrowUpRight text-xl px-2"></i></div>
+            <div class="my-3"><i class="iconfont icon-pencil text-xl px-2"></i></div>
+            <div class="my-3"><i class="iconfont icon-line text-xl font-bold px-2"></i></div>
+            <div class="my-3"><i class="iconfont icon-circle text-xl px-2"></i></div>
+            <div class="my-3">
+              <i class="iconfont icon-triangle-s-o text-xl px-2 text-gray-500"></i>
+            </div>
+            <div class="my-3"><i class="iconfont icon-Rectangle text-xl px-2"></i></div>
+            <div class="my-3"><i class="iconfont icon-tuoyuan text-2xl px-2"></i></div>
+            <div class="my-3"><i class="iconfont icon-text text-2xl px-2 text-gray-500"></i></div>
+          </div>
+        </div>
+        <el-main class="bg-white">
+          <div></div>
+        </el-main>
       </el-container>
     </el-container>
   </div>

@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3745395 */
-  src: url('//at.alicdn.com/t/c/font_3745395_wuhh2l4lvs.woff2?t=1667894959637') format('woff2'),
-       url('//at.alicdn.com/t/c/font_3745395_wuhh2l4lvs.woff?t=1667894959637') format('woff'),
-       url('//at.alicdn.com/t/c/font_3745395_wuhh2l4lvs.ttf?t=1667894959637') format('truetype');
+  src: url('//at.alicdn.com/t/c/font_3745395_9tidreky5o9.woff2?t=1668230631305') format('woff2'),
+       url('//at.alicdn.com/t/c/font_3745395_9tidreky5o9.woff?t=1668230631305') format('woff'),
+       url('//at.alicdn.com/t/c/font_3745395_9tidreky5o9.ttf?t=1668230631305') format('truetype');
 }
 
 .iconfont {
@@ -11,6 +11,38 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-pencil:before {
+  content: "\e6ca";
+}
+
+.icon-pen:before {
+  content: "\e641";
+}
+
+.icon-line:before {
+  content: "\e7fd";
+}
+
+.icon-Line:before {
+  content: "\e66b";
+}
+
+.icon-circle:before {
+  content: "\eb94";
+}
+
+.icon-triangle-s-o:before {
+  content: "\e74c";
+}
+
+.icon-Rectangle:before {
+  content: "\e670";
+}
+
+.icon-rectangle:before {
+  content: "\e6b1";
 }
 
 .icon-fanhui:before {
