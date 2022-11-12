@@ -6,11 +6,12 @@
         height="40px"
       >
         <div>
-          <i class="iconfont icon-fanhui cursor-pointer"></i><span class="px-5">|</span>
-          <i class="iconfont icon-Undo cursor-pointer"></i>
-          <i class="iconfont icon-Redo cursor-pointer px-5"></i>
+          <i class="iconfont icon-fanhui cursor-pointer hover:bg-gray-200 p-1"></i
+          ><span class="px-5">|</span>
+          <i class="iconfont icon-Undo cursor-pointer hover:bg-gray-200 p-1"></i>
+          <i class="iconfont icon-Redo cursor-pointer mx-5 hover:bg-gray-200 p-1"></i>
           <span class="pr-5">|</span>
-          <el-select v-model="fontSelect" placeholder="微软雅黑" class="font">
+          <el-select v-model="fontSelect" class="font">
             <el-option
               v-for="item in options"
               :key="item.value"
@@ -26,18 +27,19 @@
             controls-position="right"
             :min="1"
             :max="10"
+            size="small"
           ></el-input-number>
           <span class="px-5">|</span>
-          <i class="iconfont icon-tianse cursor-pointer text-gray-500"></i>
-          <i class="el-icon-edit cursor-pointer pl-5"></i>
-          <i class="iconfont icon-image cursor-pointer pl-5"></i>
+          <i class="iconfont icon-tianse cursor-pointer text-gray-500 hover:bg-gray-200 p-1"></i>
+          <i class="el-icon-edit cursor-pointer ml-3 hover:bg-gray-200 p-1"></i>
+          <i class="iconfont icon-image cursor-pointer hover:bg-gray-200 p-1 ml-3"></i>
           <span class="px-5">|</span>
-          <i class="iconfont icon-select cursor-pointer text-gray-800"></i>
-          <i class="iconfont icon-cut cursor-pointer px-5"></i>
-          <i class="iconfont icon-copy cursor-pointer pr-5"></i>
-          <i class="iconfont icon-paste cursor-pointer text-gray-500"></i>
+          <i class="iconfont icon-select cursor-pointer text-gray-800 hover:bg-gray-200 p-1"></i>
+          <i class="iconfont icon-cut cursor-pointer hover:bg-gray-200 p-1 mx-3"></i>
+          <i class="iconfont icon-copy cursor-pointer mr-5 hover:bg-gray-200 p-1"></i>
+          <i class="iconfont icon-paste cursor-pointer text-gray-500 hover:bg-gray-200 p-1"></i>
           <span class="px-5">|</span>
-          <i class="iconfont icon-clear cursor-pointer text-gray-800"></i>
+          <i class="iconfont icon-clear cursor-pointer text-gray-800 hover:bg-gray-200 p-1"></i>
         </div>
       </el-header>
       <el-container class="mt-10 text-center">
@@ -81,7 +83,7 @@ export default {
           label: '楷体',
         },
       ],
-      fontSelect: '',
+      fontSelect: '选项1',
       fontSize: 1,
     };
   },
