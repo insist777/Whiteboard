@@ -32,7 +32,7 @@
         </p>
         <div class="button mt-10">
           <button @click="createWhiteBoard">创建房间</button>
-          <button>加入房间</button>
+          <button @click="addWhiteBoard">加入房间</button>
         </div>
       </div>
     </div>
@@ -46,7 +46,10 @@ export default {
   },
   methods: {
     createWhiteBoard() {
-      this.$router.push('/whiteBoard');
+      this.$router.push({ path: '/login', query: { route: 'create' } });
+    },
+    addWhiteBoard() {
+      this.$router.push({ path: '/login', query: { route: 'add' } });
     },
   },
 };
