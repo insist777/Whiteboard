@@ -1,0 +1,138 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3745395 */
+  src: url('//at.alicdn.com/t/c/font_3745395_9tidreky5o9.woff2?t=1668230631305') format('woff2'),
+       url('//at.alicdn.com/t/c/font_3745395_9tidreky5o9.woff?t=1668230631305') format('woff'),
+       url('//at.alicdn.com/t/c/font_3745395_9tidreky5o9.ttf?t=1668230631305') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-pencil:before {
+  content: "\e6ca";
+}
+
+.icon-pen:before {
+  content: "\e641";
+}
+
+.icon-line:before {
+  content: "\e7fd";
+}
+
+.icon-Line:before {
+  content: "\e66b";
+}
+
+.icon-circle:before {
+  content: "\eb94";
+}
+
+.icon-triangle-s-o:before {
+  content: "\e74c";
+}
+
+.icon-Rectangle:before {
+  content: "\e670";
+}
+
+.icon-rectangle:before {
+  content: "\e6b1";
+}
+
+.icon-fanhui:before {
+  content: "\e6ff";
+}
+
+.icon-about:before {
+  content: "\e640";
+}
+
+.icon-contact:before {
+  content: "\e603";
+}
+
+.icon-tiaosepan:before {
+  content: "\e62f";
+}
+
+.icon-paste:before {
+  content: "\e7ad";
+}
+
+.icon-cut:before {
+  content: "\e68d";
+}
+
+.icon-tianjia_huaban:before {
+  content: "\e619";
+}
+
+.icon-copy:before {
+  content: "\e66a";
+}
+
+.icon-delete:before {
+  content: "\e687";
+}
+
+.icon-xingzhuang-juxing:before {
+  content: "\eb97";
+}
+
+.icon-clear:before {
+  content: "\e633";
+}
+
+.icon-home:before {
+  content: "\e7c6";
+}
+
+.icon-Redo:before {
+  content: "\e95d";
+}
+
+.icon-Undo:before {
+  content: "\e962";
+}
+
+.icon-text:before {
+  content: "\e734";
+}
+
+.icon-24gl-move:before {
+  content: "\eb70";
+}
+
+.icon-tuoyuan:before {
+  content: "\e610";
+}
+
+.icon-image:before {
+  content: "\e967";
+}
+
+.icon-menu:before {
+  content: "\e677";
+}
+
+.icon-ArrowDownLeft:before {
+  content: "\e60a";
+}
+
+.icon-ArrowUpRight:before {
+  content: "\e615";
+}
+
+.icon-select:before {
+  content: "\e6cc";
+}
+
+.icon-tianse:before {
+  content: "\e643";
+}

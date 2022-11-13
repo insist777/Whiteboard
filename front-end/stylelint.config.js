@@ -62,7 +62,11 @@ module.exports = {
   overrides: [
     {
       files: ['*.vue', '**/*.vue', '*.html', '**/*.html'],
-      extends: ['stylelint-config-recommended', 'stylelint-config-html', 'stylelint-config-recommended-vue'],
+      extends: [
+        'stylelint-config-recommended',
+        'stylelint-config-html',
+        'stylelint-config-recommended-vue',
+      ],
       rules: {
         // 指定关键帧名称的模式
         'keyframes-name-pattern': null,
