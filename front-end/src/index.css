@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@font-face {
+  font-family: 'ShadedLarch';
+  font-weight: 400;
+  src: url('@/assets/font/ShadedLarch.ttf');
+}
