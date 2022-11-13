@@ -26,6 +26,7 @@ import Konva from 'konva';
 import { Tools } from './config';
 import HeaderMenu from './components/headerMenu.vue';
 import AsideMenu from './components/asideMenu.vue';
+import { reqAddressInfo } from '@/api/user';
 
 export default {
   components: {
@@ -44,6 +45,11 @@ export default {
       mouseupY: null,
     };
   },
+  computed: {
+    params() {
+      return this.$route.params;
+    },
+  },
   mounted() {
     this.initial();
     this.stage.add(this.layer);
@@ -59,6 +65,16 @@ export default {
         height,
       });
       this.layer = new Konva.Layer();
+
+      if (this.params.derect === 'add') {
+        reqAddressInfo({
+          name: this.params.name,
+          id: this.params.id,
+          roomId: this.params.roomId,
+        }).then((res) => {
+          console.log(res);
+        });
+      }
     },
     // 添加矩形
     addRect() {
@@ -81,7 +97,6 @@ export default {
           this.addRect();
           break;
         default:
-          return;
       }
     },
     getMousedownData(e) {
