@@ -167,7 +167,6 @@ export class WhiteBoardSystem {
       this.reDraw();
     }
     if (this.brush.type === 'arrow' && this.brush.down) {
-      console.log(this.brush.node);
       const currentX = e.evt.layerX - this.brush.startPosition.x;
       const currentY = e.evt.layerY - this.brush.startPosition.y;
       this.brush.node.attrs.points[2] = currentX;
@@ -202,7 +201,6 @@ export class WhiteBoardSystem {
   static select(target) {
     // 应该没有别人选中的时候才能选中
     if (target.shapeId !== undefined) {
-      console.log('选中的是', target);
       target.draggable(true);
       this.openTranformer(target);
       this.currentSelectNode.push(target);
@@ -249,7 +247,6 @@ export class WhiteBoardSystem {
    * 添加konva结点
    */
   static _addKonvaShape(node, sheetIndex) {
-    console.log(this.stages);
     this.stages[Number(sheetIndex)].stage.children[0].add(node);
     this.reDraw();
   }
@@ -311,7 +308,6 @@ export class WhiteBoardSystem {
    */
   static _bindDrawingHandler(stage) {
     stage.on('mousedown', (e) => {
-      console.log(e.target);
       if (e.target === stage) {
         this.clearSelector(stage);
         this.currentSelectNode.forEach((node) => node.draggable(false));
@@ -350,20 +346,13 @@ export class WhiteBoardSystem {
   static createLayerByCache(index, shapes) {
     const layer = new Konva.Layer();
     shapes.forEach((shape) => {
-      if (shape.type === 'rect') {
-        const rect = WhiteBoardSystem.createRectByCache(shape);
-        layer.add(rect);
-        rect.on('mouseup', (e) => {
-          const { parent } = e.target;
-          const transformer = new Konva.Transformer({
-            node: e.target,
-            centeredScaling: false,
-            shouldOverdrawWholeArea: true,
-          });
-          console.log(transformer);
-          parent.add(transformer);
-        });
-      }
+      const { type } = shape;
+      const jsonObj = JSON.parse(shape.json);
+      const node = new Konva[jsonObj.className](jsonObj.attrs);
+      node.type = type;
+      node.shapeId = shape.shapeId;
+      node.userId = shape.userId;
+      layer.add(node);
     });
     return layer;
   }
@@ -393,9 +382,7 @@ export class WhiteBoardSystem {
         width,
         height,
       });
-      console.log('s', s);
       this._bindDrawingHandler(s);
-
       const layer = WhiteBoardSystem.createLayerByCache(index, stage.shapes);
       s.add(layer);
       WhiteBoardSystem.stages[index].stage = s;
@@ -403,7 +390,7 @@ export class WhiteBoardSystem {
   }
 
   static reDraw() {
-    this.stages[this.currentSheet].stage.children[0].draw();
+    this.stages[Number(this.currentSheet)].stage.children[0].draw();
   }
 
   static bindStages() {
@@ -433,7 +420,8 @@ export class WhiteBoardSystem {
 
   static initStages(cache, userid) {
     this.userid = userid;
-    cache.forEach((obj) => {
+    const { whiteBoardCache } = cache;
+    whiteBoardCache.forEach((obj) => {
       WhiteBoardSystem.stages.push({
         id: obj.id,
         name: obj.name,
@@ -452,8 +440,16 @@ export class WhiteBoardSystem {
     node.type = type;
     node.shapeId = cacheBody.shapeId;
     node.userId = cacheBody.userId;
-    this._addKonvaShape(node, cacheBody.sheetIndex);
+    this._addKonvaShape(node, Number(cacheBody.sheetIndex));
     return node;
+  }
+
+  static addNodeFromCache(cacheBody) {
+    const { sheetIndex } = cacheBody;
+    const layer = this.stages[Number(sheetIndex)].stage.children[0];
+    const node = this.createNodeByCacheDirective(cacheBody);
+    layer.add(node);
+    layer.draw();
   }
 
   /**
@@ -463,15 +459,10 @@ export class WhiteBoardSystem {
     if (cacheBody.userId === this.userid) {
       return;
     }
-    const { sheetIndex } = cacheBody;
-    const layer = this.stages[Number(sheetIndex)].stage.children[0];
-    const node = this.createNodeByCacheDirective(cacheBody);
-    layer.add(node);
-    layer.draw();
+    this.addNodeFromCache(cacheBody);
   }
 
   static deleteDirective(cacheBody) {
-    console.log('deleteDirective', cacheBody);
     if (cacheBody.userId === this.userid) {
       return;
     }
@@ -488,8 +479,6 @@ export class WhiteBoardSystem {
     if (operate === undefined) {
       return;
     }
-    console.log('operate', operate);
-    console.log('backout');
     const backoutOperate = { type: '', nodes: [] };
     // 判断操作的类型
     // 如果是add
@@ -543,93 +532,41 @@ export class WhiteBoardSystem {
   /**
    [{"id":"container_1","name":"随便画画1","shapes":[{"shapeId":"10023","userId":"324ad43bc2","type":"rect","position":{"x":60,"y":60},"lineStyle":{"type":"solid","weight":"2px","color":"#ff0000"},"fillStyle":{"color":"#ff0000"},"attrs":{"size":{"width":100,"height":100}}}]},{"id":"container_2","name":"随便画画2","shapes":[{"shapeId":"10024","userId":"324ad43bc2","type":"rect","position":{"x":100,"y":200},"lineStyle":{"type":"solid","weight":"2px","color":"#00ff00"},"fillStyle":{"color":"#00ff00"},"attrs":{"size":{"width":80,"height":80}}}]},{"id":"container_3","name":"随便画画3","shapes":[{"shapeId":"10027","userId":"324ad43bc2","type":"rect","position":{"x":300,"y":300},"lineStyle":{"type":"solid","weight":"2px","color":"#ff0000"},"fillStyle":{"color":"#0000ff"},"attrs":{"size":{"width":150,"height":150}}}]}]
    */
-  static initData = [
-    {
-      id: 'container_1',
-      name: '随便画画1',
-      shapes: [
+
+  static initData = {
+    type: 'init',
+    roomId: '123123',
+    body: {
+      config: {
+        editMode: 'w',
+      },
+      users: [
         {
-          shapeId: '10023',
           userId: '324ad43bc2',
-          type: 'rect',
-          position: {
-            x: 60,
-            y: 60,
-          },
-          lineStyle: {
-            type: 'solid',
-            weight: '2px',
-            color: '#ff0000',
-          },
-          fillStyle: {
-            color: '#ff0000',
-          },
-          attrs: {
-            size: {
-              width: 100,
-              height: 100,
+          auth: 'master',
+          permission: 'w',
+        },
+        {
+          userId: '879ad43bc2',
+          auth: 'other',
+          permission: 'w',
+        },
+      ],
+      whiteBoardCache: [
+        {
+          id: 'container_1',
+          name: '未命名',
+          shapes: [
+            {
+              sheetIndex: 0,
+              shapeId: '10023',
+              userId: '324ad43bc2',
+              type: 'rect',
+              json: `{"attrs":{"x":10,"y":15,"width":50,"height":50,"stroke":"black"},"className":"Rect"}`,
             },
-          },
+          ],
         },
       ],
     },
-    {
-      id: 'container_2',
-      name: '随便画画2',
-      shapes: [
-        {
-          shapeId: '10024',
-          userId: '324ad43bc2',
-          type: 'rect',
-          position: {
-            x: 100,
-            y: 200,
-          },
-          lineStyle: {
-            type: 'solid',
-            weight: '2px',
-            color: '#00ff00',
-          },
-          fillStyle: {
-            color: '#00ff00',
-          },
-          attrs: {
-            size: {
-              width: 80,
-              height: 80,
-            },
-          },
-        },
-      ],
-    },
-    {
-      id: 'container_3',
-      name: '随便画画3',
-      shapes: [
-        {
-          shapeId: '10027',
-          userId: '324ad43bc2',
-          type: 'rect',
-          position: {
-            x: 300,
-            y: 300,
-          },
-          lineStyle: {
-            type: 'solid',
-            weight: '2px',
-            color: '#ff0000',
-          },
-          fillStyle: {
-            color: '#0000ff',
-          },
-          attrs: {
-            size: {
-              width: 150,
-              height: 150,
-            },
-          },
-        },
-      ],
-    },
-  ];
+  };
 }
