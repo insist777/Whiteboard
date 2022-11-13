@@ -47,19 +47,6 @@ func (hub *Hub) run() {
 	}
 }
 
-func (hub *Hub) handleWebSocket(w http.ResponseWriter, r *http.Request) {
-	socket, err := upgrader.Upgrade(w, r, nil)
-	if err != nil {
-		log.Println(err)
-		http.Error(w, "could not upgrade", http.StatusInternalServerError)
-		return
-	}
-	client := newClient(hub, socket)
-	hub.clients = append(hub.clients, client)
-	hub.register <- client
-	client.run()
-}
-
 func (hub *Hub) send(model interface{}, client *Client) {
 	data, _ := json.Marshal(model)
 	client.outbound <- data

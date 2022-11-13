@@ -1,7 +1,6 @@
 package main
 
 import (
-	"Whiteboard-backend/utils"
 	"fmt"
 	"github.com/gorilla/websocket"
 	uuid "github.com/satori/go.uuid"
@@ -18,7 +17,7 @@ type Client struct {
 func newClient(hub *Hub, socket *websocket.Conn) *Client {
 	return &Client{
 		id:       uuid.NewV4().String(),
-		color:    utils.GenerateColor(),
+		color:    "",
 		hub:      hub,
 		socket:   socket,
 		outbound: make(chan []byte),
