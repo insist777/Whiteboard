@@ -29,6 +29,7 @@ export class WhiteBoardSystem {
   static brush = {
     type: 'move',
     node: null,
+    startPosition: {}, // 鼠标按下去的坐标
     position: {},
     down: false,
     lineStyle: {
@@ -64,8 +65,11 @@ export class WhiteBoardSystem {
     return rect;
   }
 
+  static buildShapeId() {
+    return `${this.userid}-${Date.now()}`;
+  }
+
   static drawRect(e, shapeId, userId) {
-    this.brush.nodeId = String(Math.floor(Math.random() * 1000));
     const rect = new Konva.Rect({
       x: e.evt.layerX,
       y: e.evt.layerY,
@@ -73,7 +77,7 @@ export class WhiteBoardSystem {
       height: 0,
       stroke: this.brush.lineStyle.color,
       fill: this.brush.fillStyle.color,
-      strokeWidth: this.brush.lineStyle.weight,
+      strokeWidth: Number(this.brush.lineStyle.weight),
       // draggable: true,
     });
     if (shapeId !== undefined) {
@@ -84,6 +88,92 @@ export class WhiteBoardSystem {
     }
     rect.type = 'rect';
     return rect;
+  }
+
+  static drawEllipse(e, shapeId, userId) {
+    const node = new Konva.Ellipse({
+      x: e.evt.layerX,
+      y: e.evt.layerY,
+      radiusX: 0,
+      radiusY: 0,
+      stroke: this.brush.lineStyle.color,
+      fill: this.brush.fillStyle.color,
+      strokeWidth: Number(this.brush.lineStyle.weight),
+      // draggable: true,
+    });
+    if (shapeId !== undefined) {
+      node.shapeId = shapeId;
+    }
+    if (userId !== undefined) {
+      node.userId = userId;
+    }
+    node.type = 'ellipse';
+    return node;
+  }
+
+  // 画箭头
+  static drawArrow(e, shapeId, userId) {
+    const currentX = e.evt.layerX;
+    const currentY = e.evt.layerY;
+    const node = new Konva.Arrow({
+      x: currentX,
+      y: currentY,
+      points: [0, 0, 0, 0],
+      pointerLength: 20,
+      pointerWidth: 20,
+      stroke: this.brush.lineStyle.color,
+      fill: this.brush.fillStyle.color,
+      strokeWidth: Number(this.brush.lineStyle.weight),
+    });
+    if (shapeId !== undefined) {
+      node.shapeId = shapeId;
+    }
+    if (userId !== undefined) {
+      node.userId = userId;
+    }
+    node.type = 'ellipse';
+    return node;
+  }
+
+  static drawingMove(e) {
+    if (this.brush.type === 'rect' && this.brush.down) {
+      const w = e.evt.layerX - this.brush.startPosition.x;
+      const h = e.evt.layerY - this.brush.startPosition.y;
+
+      if (w < 0 && h > 0) {
+        const position = { x: this.brush.startPosition.x + w, y: this.brush.startPosition.y };
+        this.brush.node.position(position);
+        this.brush.position = position;
+      } else if (h < 0 && w > 0) {
+        const position = { x: this.brush.startPosition.x, y: this.brush.startPosition.y + h };
+        this.brush.node.position(position);
+        this.brush.position = position;
+      } else if (w < 0 && h < 0) {
+        const position = { x: this.brush.startPosition.x + w, y: this.brush.startPosition.y + h };
+        this.brush.node.position(position);
+        this.brush.position = position;
+      }
+      this.brush.node.attrs.width = Math.abs(w);
+      this.brush.node.attrs.height = Math.abs(h);
+      // e.target.children[0].draw();
+      this.reDraw();
+    }
+    if (this.brush.type === 'ellipse' && this.brush.down) {
+      const w = e.evt.layerX - this.brush.startPosition.x;
+      const h = e.evt.layerY - this.brush.startPosition.y;
+      this.brush.node.attrs.radiusX = Math.abs(w);
+      this.brush.node.attrs.radiusY = Math.abs(h);
+      // e.target.children[0].draw();
+      this.reDraw();
+    }
+    if (this.brush.type === 'arrow' && this.brush.down) {
+      console.log(this.brush.node);
+      const currentX = e.evt.layerX - this.brush.startPosition.x;
+      const currentY = e.evt.layerY - this.brush.startPosition.y;
+      this.brush.node.attrs.points[2] = currentX;
+      this.brush.node.attrs.points[3] = currentY;
+      this.reDraw();
+    }
   }
 
   /**
@@ -112,6 +202,7 @@ export class WhiteBoardSystem {
   static select(target) {
     // 应该没有别人选中的时候才能选中
     if (target.shapeId !== undefined) {
+      console.log('选中的是', target);
       target.draggable(true);
       this.openTranformer(target);
       this.currentSelectNode.push(target);
@@ -182,11 +273,37 @@ export class WhiteBoardSystem {
       nodes: [],
     };
     this.currentSelectNode.forEach((node) => {
-      this._deleteNode('Transformer', node.shapeId, this.currentSheet);
-      const deleteNode = this._deleteNode('Shape', node.shapeId, this.currentSheet);
+      this._deleteNodeAndSendRective('Transformer', node.shapeId, this.currentSheet);
+      const deleteNode = this._deleteNodeAndSendRective('Shape', node.shapeId, this.currentSheet);
       operate.nodes.push(deleteNode);
     });
     this.userOperateStack.push(operate);
+  }
+
+  static setBrushNodeInfo(node, position) {
+    this.brush.node = node;
+    this.brush.startPosition = { x: position.x, y: position.y };
+    this.brush.position = { x: position.x, y: position.y };
+  }
+
+  // 创建画笔结点
+  static createBrushNode(type, e, layer) {
+    let node = null;
+    if (type === 'rect') {
+      node = this.drawRect(e, this.buildShapeId(), this.userid);
+    }
+    if (type === 'ellipse') {
+      node = this.drawEllipse(e, this.buildShapeId(), this.userid);
+    }
+    if (type === 'arrow') {
+      node = this.drawArrow(e, this.buildShapeId(), this.userid);
+    }
+    if (node !== null) {
+      this.setBrushNodeInfo(node, { x: e.evt.layerX, y: e.evt.layerY });
+      layer.add(node);
+      // 加入操作栈
+      this.userOperateStack.appendOperate('add', [node.shapeId]);
+    }
   }
 
   /**
@@ -207,40 +324,13 @@ export class WhiteBoardSystem {
       if (this.permission === 'pw' && this.brush.type === 'move' && e.target.userid === this.userid) {
         this.select(e.target);
       }
-      // const node = e.currentTarget;
-      if (this.brush.type === 'rect') {
-        const rect = this.drawRect(e, `${this.userid}-${Date.now()}`, this.userid);
-        this.brush.node = rect;
-        this.brush.position = { x: e.evt.layerX, y: e.evt.layerY };
-        stage.children[0].add(rect);
-        // 加入操作栈
-        this.userOperateStack.appendOperate('add', [rect.shapeId]);
-      }
+      // 开始画画,清理恢复栈
+      this.recoverStack.clear();
+      // 创建画笔
+      this.createBrushNode(this.brush.type, e, stage.children[0]);
     });
     stage.on('mouseup', (e) => {
       if (this.brush.down && this.brush.node !== null) {
-        // 发送操作指令到服务器
-        // Communication.send(
-        //   JSON.stringify({
-        //     type: 'add',
-        //     body: {
-        //       sheetIndex: this.currentSheet,
-        //       shapeId: this.brush.nodeId, // 通用
-        //       userId: this.userid,
-        //       type: this.brush.type, // 通用
-        //       position: this.brush.position,
-        //       lineStyle: this.brush.lineStyle,
-        //       fillStyle: this.brush.fillStyle,
-        //       // 服务器端可以直接存储json字符串
-        //       attrs: {
-        //         size: {
-        //           width: Math.abs(e.evt.layerX - this.brush.position.x),
-        //           height: Math.abs(e.evt.layerY - this.brush.position.y),
-        //         },
-        //       },
-        //     },
-        //   }),
-        // );
         this.sendDirective('add', {
           shapeId: this.brush.node.shapeId,
           type: this.brush.type,
@@ -249,19 +339,11 @@ export class WhiteBoardSystem {
       }
       this.brush.down = false;
       this.brush.node = null;
-      this.brush.nodeId = null;
       this.brush.position = {};
       this.reDraw();
     });
     stage.on('mousemove', (e) => {
-      if (this.brush.type === 'rect' && this.brush.down) {
-        const w = Math.abs(e.evt.layerX - this.brush.position.x);
-        const h = Math.abs(e.evt.layerY - this.brush.position.y);
-        this.brush.node.attrs.width = w;
-        this.brush.node.attrs.height = h;
-        // e.target.children[0].draw();
-        this.reDraw();
-      }
+      this.drawingMove(e);
     });
   }
 
@@ -352,19 +434,6 @@ export class WhiteBoardSystem {
   static initStages(cache, userid) {
     this.userid = userid;
     cache.forEach((obj) => {
-      // const width = window.innerWidth;
-      // const height = window.innerHeight;
-
-      // const stage = new Konva.Stage({
-      //   container: obj.id,
-      //   width,
-      //   height,
-      // });
-
-      // const layer = WhiteBoardSystem.createLayerByCache(cache.shapes);
-
-      // add the layer to the stage
-      // stage.add(layer);
       WhiteBoardSystem.stages.push({
         id: obj.id,
         name: obj.name,
@@ -372,7 +441,6 @@ export class WhiteBoardSystem {
         stage: {},
       });
     });
-    console.log('initStages结果', WhiteBoardSystem.stages);
     this.initFlag = true;
   }
 
@@ -385,20 +453,6 @@ export class WhiteBoardSystem {
     node.shapeId = cacheBody.shapeId;
     node.userId = cacheBody.userId;
     this._addKonvaShape(node, cacheBody.sheetIndex);
-    // if (type === 'rect') {
-    //   node = new Konva.Rect({
-    //     x: cacheBody.position.x,
-    //     y: cacheBody.position.y,
-    //     width: cacheBody.attrs.size.width,
-    //     height: cacheBody.attrs.size.height,
-    //     stroke: cacheBody.lineStyle.color,
-    //     strokeWidth: cacheBody.lineStyle.weight,
-    //     fill: cacheBody.fillStyle.color,
-    //   });
-    //   if (this.permission === 'w') {
-    //     // node.draggable(true);
-    //   }
-    // }
     return node;
   }
 
@@ -406,13 +460,11 @@ export class WhiteBoardSystem {
    * 添加来自服务器的图形
    */
   static addDirective(cacheBody) {
-    console.log('cacheBody', cacheBody);
     if (cacheBody.userId === this.userid) {
       return;
     }
     const { sheetIndex } = cacheBody;
     const layer = this.stages[Number(sheetIndex)].stage.children[0];
-    console.log('要添加的layer', layer);
     const node = this.createNodeByCacheDirective(cacheBody);
     layer.add(node);
     layer.draw();

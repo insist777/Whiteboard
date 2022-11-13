@@ -32,7 +32,9 @@
       <div>
         <el-radio-group v-model="brushType">
           <el-radio-button label="选择"></el-radio-button>
+          <el-radio-button label="箭头"></el-radio-button>
           <el-radio-button label="矩形"></el-radio-button>
+          <el-radio-button label="圆形"></el-radio-button>
         </el-radio-group>
       </div>
     </el-card>
@@ -79,6 +81,7 @@ export default {
     },
     lineWeight(nv) {
       WhiteBoardSystem.brush.lineStyle.weight = nv;
+      console.log(WhiteBoardSystem.brush.lineStyle.weight);
     },
     userid(newValue) {
       WhiteBoardSystem.userid = newValue;
@@ -90,7 +93,7 @@ export default {
       WhiteBoardSystem.roomId = nv;
     },
     brushType(nv) {
-      const dict = { 选择: 'move', 矩形: 'rect' };
+      const dict = { 选择: 'move', 箭头: 'arrow', 矩形: 'rect', 圆形: 'ellipse' };
       WhiteBoardSystem.brush.type = dict[nv];
     },
   },

@@ -25,4 +25,8 @@ export default class OperateStack {
     };
     this.push(operate);
   }
+
+  clear() {
+    this._opetates = [];
+  }
 }
